@@ -462,11 +462,18 @@ footer a:hover {
 .hero-section {
   min-height: 100vh;
   background-attachment: fixed;
-  background-size:  100% auto;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
+/* Responsive background for different screen sizes */
+@media (max-width: 1399px) {
+  .hero-section {
+    background-size: contain;
+    background-color: #2a2a2a;
+  }
+}
 /* Ensure proper text contrast over background */
 .hero-text {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
