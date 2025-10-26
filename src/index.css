@@ -1,16 +1,13 @@
 :root {
-  /* GRID CONTROLS - Adjusted for readability */
   --cell-size: 100px;        
   --line-thickness: 2px;
   --grid-color: 200,210,220;
   
-  /* OPACITY CONTROLS - Much lower for text readability */
   --opacity-top: 0.25;
   --opacity-middle: 0.15;
   --opacity-lower: 0.08;
   --opacity-bottom: 0.02;
 
-  /* FADE STOPS - Your custom values (kept as-is) */
   --fade-top: 0%;
   --fade-mid: 20%;
   --fade-bottom: 80%;
@@ -44,7 +41,6 @@ body {
   min-height: 100vh;
 }
 
-/* Skip link for accessibility */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -65,9 +61,6 @@ body {
   min-height: 100vh;
 }
 
-/* ============================================
-   DIAGONAL FADING GRID OVERLAY (CSS VERSION)
-   ============================================ */
 
 .grid-overlay {
   pointer-events: none;
@@ -76,13 +69,11 @@ body {
   z-index: 1;
 }
 
-/* Diagonal diamond grid using 45deg and -45deg gradients */
 .grid-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
   
-  /* Two diagonal gradient layers create diamond pattern */
   background-image:
     repeating-linear-gradient(
       45deg,
@@ -95,7 +86,6 @@ body {
       transparent var(--line-thickness) var(--cell-size)
     );
   
-  /* VERTICAL FADE using CSS mask with your custom fade stops */
   mask-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, var(--opacity-top)) var(--fade-top),
@@ -104,7 +94,6 @@ body {
     rgba(0, 0, 0, var(--opacity-bottom)) var(--fade-bottom)
   );
   
-  /* Safari support */
   -webkit-mask-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, var(--opacity-top)) var(--fade-top),
@@ -117,7 +106,6 @@ body {
   opacity: 1;
 }
 
-/* Utility classes for quick size changes */
 .grid-large {
   --cell-size: 120px;
   --line-thickness: 4px;
@@ -133,10 +121,6 @@ body {
   --line-thickness: 2px;
 }
 
-/* ============================================
-   CANVAS FALLBACK (hidden by default)
-   ============================================ */
-
 .grid-canvas {
   position: fixed;
   inset: 0;
@@ -149,9 +133,6 @@ body {
   display: none;
 }
 
-/* ============================================
-   CONTENT LAYOUT
-   ============================================ */
 
 .letter-container {
   position: relative;
@@ -160,7 +141,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 60px 200px 80px; /* Your custom padding (kept as-is) */
+  padding: 60px 200px 80px; 
 }
 
 @media (max-width: 1200px) {
@@ -180,7 +161,6 @@ body {
   max-width: 1100px;
 }
 
-/* Logo positioned at top-left */
 .logo-wrapper {
   margin-bottom: 64px;
 }
@@ -226,14 +206,15 @@ body {
   color: #bbddff;
 }
 
+.underline-text {
+  text-decoration: underline;
+}
+
 .content a:focus {
   outline: 2px solid #9fc3ff;
   outline-offset: 2px;
 }
 
-/* ============================================
-   TYPOGRAPHY STYLES (NEW - for Keep Knockin')
-   ============================================ */
 
 .main-title {
   font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -282,10 +263,6 @@ body {
   font-weight: 600;
 }
 
-/* ============================================
-   AUDIENCE SECTIONS (NEW)
-   ============================================ */
-
 .audience-section {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -310,10 +287,6 @@ body {
   transform: translateX(4px);
   transition: transform 0.2s ease;
 }
-
-/* ============================================
-   LEGACY STYLES (kept for compatibility)
-   ============================================ */
 
 .greeting {
   font-weight: 500;
@@ -354,10 +327,6 @@ body {
   font-style: italic;
   color: #d0d0d0;
 }
-
-/* ============================================
-   RESPONSIVE ADJUSTMENTS
-   ============================================ */
 
 @media (max-width: 768px) {
   .content-wrapper {
