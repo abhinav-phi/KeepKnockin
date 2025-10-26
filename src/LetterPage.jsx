@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import logo from '/assets/logo.png';
+import logo from '/assets/main_logo.png';
 
 export default function LetterPage() {
   const canvasRef = useRef(null);
 
-  // Optional Canvas fallback - uncomment if CSS mask doesn't work
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -67,10 +66,8 @@ export default function LetterPage() {
 
   return (
     <div className="letter-page">
-      {/* CSS Grid Overlay */}
       <div className="grid-overlay grid-medium" aria-hidden="true"></div>
 
-      {/* Canvas fallback */}
       <canvas 
         ref={canvasRef} 
         className="grid-canvas"
@@ -122,8 +119,9 @@ export default function LetterPage() {
                 Get feedback, prep sessions, and join a community that helps you grow, not just apply.
               </p>
               <p>
+                <span style={{ textDecoration: 'underline' }}>Join our WhatsApp community</span> →{' '}
                 <a href="https://chat.whatsapp.com/your-link" className="cta-link">
-                  Join our WhatsApp community →
+                  Click Here
                 </a>
               </p>
             </div>
