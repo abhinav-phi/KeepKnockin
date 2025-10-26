@@ -1,0 +1,392 @@
+:root {
+  /* GRID CONTROLS - Adjusted for readability */
+  --cell-size: 100px;        
+  --line-thickness: 2px;
+  --grid-color: 200,210,220;
+  
+  /* OPACITY CONTROLS - Much lower for text readability */
+  --opacity-top: 0.25;
+  --opacity-middle: 0.15;
+  --opacity-lower: 0.08;
+  --opacity-bottom: 0.02;
+
+  /* FADE STOPS - Your custom values (kept as-is) */
+  --fade-top: 0%;
+  --fade-mid: 20%;
+  --fade-bottom: 80%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #0b1220 0%, #07101a 100%);
+  color: #e6e6e6;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.letter-page {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ============================================
+   DIAGONAL FADING GRID OVERLAY (CSS VERSION)
+   ============================================ */
+
+.grid-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Diagonal diamond grid using 45deg and -45deg gradients */
+.grid-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  
+  /* Two diagonal gradient layers create diamond pattern */
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      rgba(var(--grid-color), 1) 0 var(--line-thickness),
+      transparent var(--line-thickness) var(--cell-size)
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(var(--grid-color), 1) 0 var(--line-thickness),
+      transparent var(--line-thickness) var(--cell-size)
+    );
+  
+  /* VERTICAL FADE using CSS mask with your custom fade stops */
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, var(--opacity-top)) var(--fade-top),
+    rgba(0, 0, 0, var(--opacity-middle)) calc(var(--fade-mid) * 0.9),
+    rgba(0, 0, 0, var(--opacity-lower)) calc(var(--fade-mid) * 1.05),
+    rgba(0, 0, 0, var(--opacity-bottom)) var(--fade-bottom)
+  );
+  
+  /* Safari support */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, var(--opacity-top)) var(--fade-top),
+    rgba(0, 0, 0, var(--opacity-middle)) calc(var(--fade-mid) * 0.9),
+    rgba(0, 0, 0, var(--opacity-lower)) calc(var(--fade-mid) * 1.05),
+    rgba(0, 0, 0, var(--opacity-bottom)) var(--fade-bottom)
+  );
+  
+  will-change: mask-image, background;
+  opacity: 1;
+}
+
+/* Utility classes for quick size changes */
+.grid-large {
+  --cell-size: 120px;
+  --line-thickness: 4px;
+}
+
+.grid-medium {
+  --cell-size: 100px;
+  --line-thickness: 3px;
+}
+
+.grid-small {
+  --cell-size: 60px;
+  --line-thickness: 2px;
+}
+
+/* ============================================
+   CANVAS FALLBACK (hidden by default)
+   ============================================ */
+
+.grid-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  display: none;
+}
+
+.grid-canvas:not([style*="display: none"]) ~ .grid-overlay {
+  display: none;
+}
+
+/* ============================================
+   CONTENT LAYOUT
+   ============================================ */
+
+.letter-container {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 60px 200px 80px; /* Your custom padding (kept as-is) */
+}
+
+@media (max-width: 1200px) {
+  .letter-container {
+    padding: 48px 60px 64px;
+  }
+}
+
+@media (max-width: 768px) {
+  .letter-container {
+    padding: 32px 24px 48px;
+  }
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* Logo positioned at top-left */
+.logo-wrapper {
+  margin-bottom: 64px;
+}
+
+@media (max-width: 768px) {
+  .logo-wrapper {
+    margin-bottom: 40px;
+  }
+}
+
+.logo {
+  display: block;
+  height: auto;
+  max-width: 200px;
+  width: 100%;
+  filter: brightness(1.1);
+}
+
+@media (max-width: 768px) {
+  .logo {
+    max-width: 160px;
+  }
+}
+
+.content {
+  width: 100%;
+  text-align: left;
+}
+
+.content p {
+  margin-bottom: 1.5em;
+  color: #e6e6e6;
+  max-width: 100%;
+}
+
+.content a {
+  color: #9fc3ff;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.content a:hover {
+  color: #bbddff;
+}
+
+.content a:focus {
+  outline: 2px solid #9fc3ff;
+  outline-offset: 2px;
+}
+
+/* ============================================
+   TYPOGRAPHY STYLES (NEW - for Keep Knockin')
+   ============================================ */
+
+.main-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  color: #f5f5f5;
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.content h2 {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+  line-height: 1.4;
+}
+
+.content h3 {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-bottom: 0.75em;
+  line-height: 1.4;
+}
+
+.tagline {
+  font-size: 1.15em;
+  font-weight: 500;
+  color: #d0e0ff;
+  margin-top: 1.5em !important;
+}
+
+.closing-title {
+  color: #f5f5f5;
+}
+
+.final-tagline {
+  font-size: 1.1em;
+  color: #d0e0ff;
+  margin-top: 1.5em !important;
+}
+
+.final-tagline strong {
+  color: #e8f0ff;
+  font-weight: 600;
+}
+
+/* ============================================
+   AUDIENCE SECTIONS (NEW)
+   ============================================ */
+
+.audience-section {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding-left: 0;
+}
+
+.audience-section h3 {
+  margin-bottom: 0.75em;
+}
+
+.audience-section p {
+  margin-bottom: 1em;
+}
+
+.cta-link {
+  font-weight: 500;
+  display: inline-block;
+  padding: 2px 0;
+}
+
+.cta-link:hover {
+  transform: translateX(4px);
+  transition: transform 0.2s ease;
+}
+
+/* ============================================
+   LEGACY STYLES (kept for compatibility)
+   ============================================ */
+
+.greeting {
+  font-weight: 500;
+  margin-bottom: 1.5em;
+  font-size: 1.05em;
+}
+
+.divider {
+  color: #666;
+  letter-spacing: 2px;
+  margin: 2.5em 0;
+  user-select: none;
+  font-size: 0.9em;
+}
+
+.hiring-section {
+  margin-top: 2em;
+}
+
+.hiring-section h2 {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin-bottom: 1em;
+  color: #f5f5f5;
+}
+
+.hiring-section p {
+  margin-bottom: 1.2em;
+}
+
+.hiring-section strong {
+  color: #f0f0f0;
+  font-weight: 600;
+}
+
+.signature {
+  margin-top: 2.5em;
+  font-style: italic;
+  color: #d0d0d0;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    max-width: 100%;
+  }
+  
+  .content p {
+    font-size: 0.95em;
+  }
+  
+  .main-title {
+    font-size: 1.5rem;
+  }
+  
+  .content h2 {
+    font-size: 1.3rem;
+    margin-top: 2em;
+  }
+  
+  .content h3 {
+    font-size: 1.1em;
+  }
+  
+  .hiring-section h2 {
+    font-size: 1.1em;
+  }
+  
+  .audience-section {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+  }
+}
