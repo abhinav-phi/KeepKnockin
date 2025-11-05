@@ -120,7 +120,7 @@ export default function LetterPage() {
               </p>
               <p>
                 <span style={{ textDecoration: 'underline' }}>Join our WhatsApp community</span> →{' '}
-                <a href="https://chat.whatsapp.com/your-link" className="cta-link">
+                <a href="https://chat.whatsapp.com/HEN3pUApnU6F8IebR83JPq?mode=wwt" className="cta-link">
                   Click Here
                 </a>
               </p>
